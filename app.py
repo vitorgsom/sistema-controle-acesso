@@ -1,12 +1,36 @@
-# app.py
+import sys
+import ctypes
+import webbrowser
+from threading import Timer
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_socketio import SocketIO, emit
 from model import UserModel
-import webbrowser
-from threading import Timer
 import serial
 import serial.tools.list_ports
 import time
+
+# --- Lógica de Instância Única (Singleton) ---
+def is_already_running():
+    """ Verifica se o programa já está rodando no Windows usando Mutex """
+    # Nome único para o nosso programa
+    mutex_name = "Global\\SistemaControleAcesso_VitorSom_Mutex"
+    
+    # Tenta criar um bloqueio (Mutex) no sistema
+    kernel32 = ctypes.windll.kernel32
+    mutex = kernel32.CreateMutexW(None, True, mutex_name)
+    last_error = kernel32.GetLastError()
+    
+    # Se o erro for 183 (ERROR_ALREADY_EXISTS), o app já está aberto
+    if last_error == 183:
+        return True
+    return False
+
+# Antes de qualquer coisa, verificamos:
+if is_already_running():
+    # Se já estiver rodando, abrimos o navegador para mostrar o sistema ao usuário
+    webbrowser.open_new("http://127.0.0.1:5000")
+    # E matamos este processo novo imediatamente para não consumir memória
+    sys.exit(0)
 
 # --- Configuração ---
 app = Flask(__name__)
