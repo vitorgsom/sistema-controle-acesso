@@ -1,13 +1,3 @@
-# Sistema de Controle de Acesso Autônomo com ESP32
-
-Projeto de TCC desenvolvido para validação de credenciais em memória com sincronização via Serial.
-
-## Tecnologias
-- Python 3
-- Flask & SocketIO
-- ESP32 (C++)
-- SQLite
-
 # Sistema de Controle de Acesso com Sincronização ESP32
 
 Este projeto é um sistema web desenvolvido em **Python (Flask)** para gerenciamento de usuários e controle de acesso autônomo. Sua principal funcionalidade é gerenciar credenciais (matrículas e senhas) e sincronizá-las diretamente para a memória de um microcontrolador **ESP32** via comunicação Serial, permitindo que o dispositivo funcione offline.
