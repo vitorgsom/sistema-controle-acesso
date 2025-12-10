@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Painel de Usuários{% endblock %}
+
+{% block content %}
+    <h1>Painel de Usuários Cadastrados</h1>
+    <table class="user-table">
+        <thead>
+            <tr>
+                <th>Matrícula</th>
+                <th>Senha</th>
+                <th>Nome Completo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for matricula, senha, nome in usuarios %}
+            <tr>
+                <td>{{ matricula }}</td>
+                <td>{{ senha }}</td>
+                <td>{{ nome }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="3">Nenhum usuário cadastrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

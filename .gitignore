@@ -1,0 +1,17 @@
+# Ignorar arquivos compilados do Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignorar ambiente virtual (MUITO IMPORTANTE)
+venv/
+env/
+.env
+
+# Ignorar banco de dados (Opcional, mas recomendado não subir dados reais)
+*.db
+*.sqlite3
+
+# Ignorar arquivos de IDE
+.vscode/
+.idea/
