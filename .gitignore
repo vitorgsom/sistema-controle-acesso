@@ -15,3 +15,17 @@ env/
 # Ignorar arquivos de IDE
 .vscode/
 .idea/
+
+# PyInstaller - Pastas de build e distribuição
+build/
+dist/
+*.spec
+
+# Inno Setup - Pastas de saída do instalador
+Output/
+Instalador/
+*.iss
+
+# Arquivos de log e temporários do sistema
+*.log
+usuarios.db

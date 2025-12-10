@@ -1,11 +1,33 @@
 import sqlite3
 import bcrypt
+import sys
+import os
 from datetime import datetime
 
 class Database:
     def __init__(self, db_file="usuarios.db"):
-        """Inicializa a conexão com o banco de dados e cria a tabela se não existir."""
-        self.conn = sqlite3.connect(db_file)
+        """
+        Inicializa a conexão.
+        - Se for .exe: Usa %LocalAppData%/SistemaControleAcesso/
+        - Se for desenvolvimento: Usa a pasta do projeto.
+        """
+        if getattr(sys, 'frozen', False):
+            # Estamos num .exe instalado no Windows
+            # Busca: C:\Users\Nome\AppData\Local
+            base_dir = os.environ.get('LOCALAPPDATA') 
+            # Cria a subpasta: ...\AppData\Local\SistemaControleAcesso
+            app_dir = os.path.join(base_dir, 'SistemaControleAcesso')
+            os.makedirs(app_dir, exist_ok=True) # Cria a pasta se não existir
+            
+            self.db_path = os.path.join(app_dir, db_file)
+        else:
+            # Estamos rodando 'python app.py'
+            base_dir = os.path.dirname(os.path.abspath(__file__))
+            self.db_path = os.path.join(base_dir, db_file)
+
+        print(f"Banco de dados em: {self.db_path}") # Útil para debug
+        
+        self.conn = sqlite3.connect(self.db_path)
         self.cursor = self.conn.cursor()
         self._criar_tabela()
 

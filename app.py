@@ -2,6 +2,8 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_socketio import SocketIO, emit
 from model import UserModel
+import webbrowser
+from threading import Timer
 import serial
 import serial.tools.list_ports
 import time
@@ -10,7 +12,8 @@ import time
 app = Flask(__name__)
 app.secret_key = 'sua_chave_secreta_super_segura' 
 # O socketio é o nosso novo 'cérebro' de comunicação em tempo real
-socketio = SocketIO(app)
+# Forçamos o async_mode='threading' para evitar erros no PyInstaller
+socketio = SocketIO(app, async_mode='threading')
 
 # --- Rotas da Aplicação ---
 
@@ -181,7 +184,12 @@ def handle_sincronizar(data):
             arduino.close()
             emit('log_update', {'msg': 'Conexão fechada.'})
 
-# --- Ponto de Entrada ---
+def open_browser():
+    webbrowser.open_new("http://127.0.0.1:5000")
+
+# Altere o bloco final para:
 if __name__ == '__main__':
-    print("Iniciando servidor Flask-SocketIO em http://127.0.0.1:5000")
-    socketio.run(app, debug=True, allow_unsafe_werkzeug=True)
+    print("Iniciando servidor Flask-SocketIO...")
+    Timer(1.5, open_browser).start() # Abre o navegador após 1.5s
+    # O debug deve ser False em produção para evitar erros com PyInstaller
+    socketio.run(app, debug=False, allow_unsafe_werkzeug=True)
