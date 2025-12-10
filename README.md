@@ -52,7 +52,7 @@ Este projeto é um sistema web desenvolvido em **Python (Flask)** para gerenciam
 
 1. **Clone o repositório**:
    ```bash
-   git clone <url-do-seu-repositorio>
+   git clone https://github.com/vitorgsom/sistema-controle-acesso.git
    cd sistema-controle-acesso
 2. **Crie e ative um ambiente virtual(Recomendado)**:
    ```bash
